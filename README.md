@@ -1,5 +1,8 @@
 # Mini Agent Runtime
 
+[![test](https://github.com/taide05/mini-agent-runtime/actions/workflows/test.yml/badge.svg)](https://github.com/taide05/mini-agent-runtime/actions/workflows/test.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A minimal agent runtime built from scratch — ReAct loop, pluggable tools, tree-based sessions, typed SSE events. Inspired by [Pi](https://github.com/earendil-works/pi).
 
 **No LangChain. No LangGraph.** Every line of the agent loop is explicit.
