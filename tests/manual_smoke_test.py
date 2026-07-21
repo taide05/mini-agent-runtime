@@ -73,7 +73,7 @@ async def test_agent_loop_with_tool():
     print(f"  Answer: {state.final_answer[:200]}...")
 
     events = event_bus.flush_events()
-    event_types = [e["event_type"] for e in events]
+    event_types = [e["type"] for e in events]
     print(f"  Event types: {event_types}")
     assert state.final_answer is not None
     assert "tool_call" in event_types, f"Expected tool_call event, got {event_types}"
