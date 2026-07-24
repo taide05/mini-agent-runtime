@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-07-24T11:44:14.395955+00:00",
+  "summary": {
+    "intent_accuracy": 0.517,
+    "task_completion_rate": 0.0,
+    "latency_p50_s": 5.24,
+    "latency_p95_s": 8.28,
+    "avg_iterations": 2.6,
+    "escalation_rate": 1.0
+  },
+  "quality": {
+    "intent_accuracy": {
+      "metric": "intent_accuracy",
+      "value": 0.517,
+      "total": 300,
+      "correct": 155,
+      "per_category": {
+        "unknown": {
+          "accuracy": 0.113,
+          "total": 80,
+          "correct": 9
+        },
+        "一般疑问": {
+          "accuracy": 0.8,
+          "total": 20,
+          "correct": 16
+        },
+        "产品咨询": {
+          "accuracy": 0.56,
+          "total": 50,
+          "correct": 28
+        },
+        "技术故障": {
+          "accuracy": 0.46,
+          "total": 50,
+          "correct": 23
+        },
+        "账号找回": {
+          "accuracy": 0.66,
+          "total": 50,
+          "correct": 33
+        },
+        "退款投诉": {
+          "accuracy": 0.92,
+          "total": 50,
+          "correct": 46
+        }
+      }
+    },
+    "task_completion": {
+      "metric": "task_completion_rate",
+      "value": 0.0,
+      "total": 300,
+      "finished": 0,
+      "stop_reasons": {
+        "unknown": 300
+      }
+    }
+  },
+  "efficiency": {
+    "latency": {
+      "metric": "latency",
+      "p50": 5.24,
+      "p95": 8.28,
+      "mean": 5.16,
+      "min": 1.28,
+      "max": 12.17,
+      "count": 300
+    },
+    "iteration_efficiency": {
+      "metric": "iteration_efficiency",
+      "avg": 2.6,
+      "median": 3.0,
+      "min": 1,
+      "max": 5,
+      "count": 300
+    }
+  },
+  "reliability": {},
+  "safety": {
+    "escalation_rate": {
+      "metric": "escalation_rate",
+      "value": 1.0,
+      "total_high_risk": 0
+    }
+  }
+}
