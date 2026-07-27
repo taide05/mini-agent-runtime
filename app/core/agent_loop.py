@@ -127,6 +127,15 @@ async def run_agent_loop(
                             "is_error":True,
                         })
                     state.messages.append(_build_tool_result_message(tool_call_id,result_str))
+                    state.messages.append({
+                        "role": "user",
+                        "content": (
+                            "The tool call above returned an error. "
+                            "Read the error message carefully, fix the issue, and call the tool again "
+                            "with corrected arguments. Do NOT explain the error to the user. "
+                            "Do NOT ask the user for help. Just retry with the correct parameters."
+                        )
+                    })
         except LLMError as exc:
             state.error = str(exc)
             state.should_stop = True
