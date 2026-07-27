@@ -135,7 +135,12 @@ async def lookup_order(order_id: str) -> dict:
     """按订单号查询订单详情。"""
     order = MOCK_ORDERS.get(order_id.upper())
     if order is None:
-        return {"found": False, "order_id": order_id, "message": f"未找到订单 {order_id}"}
+        return {
+            "found": False, "order_id": order_id,
+            "error_type": "not_found",
+            "message": f"未找到订单 {order_id}",
+            "suggestion": f"请确认订单号格式为 ORD-XXX（如 ORD-001），或请用户提供正确的订单号",
+        }
     return {"found": True, **order}
 
 
@@ -149,7 +154,12 @@ async def verify_account(identifier: str) -> dict:
     """校验用户账号状态。identifier 可以是邮箱或手机号。"""
     account = MOCK_ACCOUNTS.get(identifier.lower())
     if account is None:
-        return {"found": False, "identifier": identifier, "message": "未找到该账号，请确认邮箱或手机号是否正确"}
+        return {
+            "found": False, "identifier": identifier,
+            "error_type": "not_found",
+            "message": f"未找到账号 '{identifier}'，请确认邮箱或手机号是否正确",
+            "suggestion": "请用户提供注册时使用的邮箱（如 xxx@example.com）或手机号（如 138xxxx1234）",
+        }
     return {"found": True, "identifier": identifier, **account}
 
 
@@ -166,7 +176,11 @@ async def search_knowledge_base(query: str) -> dict:
                 "relevance": "high",
             })
     if not results:
-        return {"query": query, "match_count": 0, "results": [], "suggestion": "未找到已知方案，建议升级至技术团队处理"}
+        return {
+            "query": query, "match_count": 0, "results": [],
+            "error_type": "no_match",
+            "suggestion": "未找到已知方案，建议扩大搜索关键词或升级至技术团队人工处理",
+        }
     return {"query": query, "match_count": len(results), "results": results}
 
 

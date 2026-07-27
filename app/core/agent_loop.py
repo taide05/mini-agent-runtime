@@ -117,12 +117,12 @@ async def run_agent_loop(
                             "is_error":False,
                         })
                     except (ToolExecutionError,ToolNotFoundError) as e:
-                        result_str = json.dumps({"error":str(e)})
+                        result_str = str(e)
                         duration_ms = int((time.monotonic() - start_time) * 1000)
                         await event_bus.emit(node_id,session_id,EventType.TOOL_RESULT,{
                             "tool_call_id":tool_call_id,
                             "tool_name":tool_name,
-                            "result":{"error":str(e)},
+                            "result":{"error": True, "detail": result_str},
                             "duration_ms":duration_ms,
                             "is_error":True,
                         })

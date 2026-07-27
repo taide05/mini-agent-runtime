@@ -5,6 +5,7 @@ Agent 需要调工具时，通过这个模块完成注册、查询和调用。
 
 from __future__ import annotations
 import asyncio
+import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Callable, Protocol
@@ -28,6 +29,16 @@ class ToolDefinition:
     fn: ToolFunction
     source: str = "builtin"
     registered_at: datetime | None = None
+
+
+@dataclass
+class StructuredToolError:
+    """工具执行失败的结构化错误，帮助 LLM 精确理解问题并自纠正。"""
+    error_type: str
+    message: str
+    param_name: str | None = None
+    expected: str | None = None
+    suggestion: str | None = None
 
 
 class ToolNotFoundError(Exception):
@@ -102,7 +113,12 @@ class ToolRegistry:
         except ToolExecutionError:
             raise
         except Exception as e:
-            raise ToolExecutionError(f"工具'{name}'执行失败:{e}") from e
+            detail = StructuredToolError(
+                error_type="execution_error",
+                message=f"工具'{name}'执行时出错: {e}",
+                suggestion=f"请检查传给 {name} 的参数是否正确，或尝试换一种方式调用",
+            )
+            raise ToolExecutionError(json.dumps(detail.__dict__, ensure_ascii=False)) from e
 
     async def get_all_as_openai_schema(self) -> list[dict[str, Any]]:
         all_tools = await self.list_all()
